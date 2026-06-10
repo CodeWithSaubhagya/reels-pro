@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Reels Pro
+
+A full-stack short-form video ("reels") platform built with Next.js. It handles
+user authentication, video uploads, and optimized video delivery through
+ImageKit, with data persisted in MongoDB.
+
+## Features
+
+- 🔐 Email/password authentication with [NextAuth.js](https://authjs.dev/) and bcrypt-hashed passwords
+- 📹 Video upload and delivery via [ImageKit](https://imagekit.io/), tuned for 1080×1920 vertical reels
+- 🛡️ Route protection through Next.js middleware
+- 🗄️ MongoDB persistence with Mongoose models and connection caching
+- 🎨 Styled with Tailwind CSS v4
+- ⚡ Built on the Next.js App Router with TypeScript
+
+## Tech Stack
+
+| Layer          | Technology                          |
+| -------------- | ----------------------------------- |
+| Framework      | Next.js 16 (App Router), React 19   |
+| Language       | TypeScript                          |
+| Auth           | NextAuth.js v5                      |
+| Database       | MongoDB + Mongoose                  |
+| Media          | ImageKit                            |
+| Styling        | Tailwind CSS v4                     |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- A MongoDB database (local or Atlas)
+- An [ImageKit](https://imagekit.io/) account
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the project root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# MongoDB
+MONGODB_URI=your_mongodb_connection_string
 
-## Learn More
+# NextAuth
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+# ImageKit
+NEXT_PUBLIC_PUBLIC_KEY=your_imagekit_public_key
+PRIVATE_KEY=your_imagekit_private_key
+NEXT_PUBLIC_URL_ENDPOINT=your_imagekit_url_endpoint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm build
+pnpm start
+```
+
+## Project Structure
+
+```
+app/
+  api/
+    auth/[...nextauth]/   NextAuth route handler
+    auth/register/        User registration endpoint
+    imagekit-auth/        ImageKit auth params endpoint
+  layout.tsx
+  page.tsx
+lib/
+  auth.ts                NextAuth configuration
+  db.ts                  Cached MongoDB connection
+models/
+  User.ts                User schema (bcrypt password hashing)
+  Video.ts               Video schema
+middleware.ts            Route protection
+```
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
